@@ -1,34 +1,11 @@
-import gql from 'graphql-tag';
 import { Formik } from 'formik';
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { Mutation, withApollo } from 'react-apollo';
 import { Drawer, Button, Col, Row, Input, message } from 'antd';
 
+import { GET_ITEMS, ADD_FOLDER } from 'graphql/queries';
 import { createFolderValidator } from 'validators/itemValidators';
-
-const GET_ITEMS = parent => gql`
-  {
-    items(parent: "${parent}") {
-    id
-    name
-    isFile
-    parent
-    createdAt
-  }
-}`;
-
-const ADD_FOLDER = gql`
-  mutation addFolder($name: String!, $parent: String!) {
-    addFolder(name: $name, parent: $parent) {
-      id
-      name
-      isFile
-      parent
-      createdAt
-    }
-  }
-`;
 
 class NewFolderDrawer extends Component {
   constructor(props) {
@@ -66,8 +43,6 @@ class NewFolderDrawer extends Component {
       <Mutation
         mutation={ADD_FOLDER}
         update={(cache, { data: { addFolder } }) => {
-          console.log({ cache });
-
           const { items } = cache.readQuery({
             query: GET_ITEMS(parent),
           });
@@ -82,7 +57,7 @@ class NewFolderDrawer extends Component {
           onClose();
         }}
         onError={error => {
-          console.log(error);
+          message.error('Oops! Something went wrong.');
         }}
       >
         {(addFolder, { data }) => (

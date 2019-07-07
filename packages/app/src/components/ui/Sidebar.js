@@ -1,35 +1,12 @@
-import gql from 'graphql-tag';
 import React, { useState } from 'react';
 import { withRouter } from 'react-router-dom';
-import { Link, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { Mutation, withApollo } from 'react-apollo';
 import { Icon, Button, Dropdown, Menu, message } from 'antd';
 
 import Logo from 'components/ui/Logo';
+import { GET_ITEMS, ADD_FILE } from 'graphql/queries';
 import NewFolderDrawer from 'components/folders/NewFolderDrawer';
-
-const GET_ITEMS = parent => gql`
-  {
-    items(parent: "${parent}") {
-    id
-    name
-    isFile
-    parent
-    createdAt
-  }
-}`;
-
-const ADD_FILE = gql`
-  mutation addFile($name: String!, $parent: String!) {
-    addFile(name: $name, parent: $parent) {
-      id
-      name
-      isFile
-      parent
-      createdAt
-    }
-  }
-`;
 
 const Sidebar = ({ match }) => {
   const fileInputRef = React.createRef();
@@ -37,7 +14,10 @@ const Sidebar = ({ match }) => {
   const triggerInputFile = () => fileInputRef.current.click();
 
   /**
-   * on file upload
+   * on file upload, hit addFile api
+   *
+   * @param {*} e domEvent
+   * @param {*} addFile mutation function
    */
   const onFileUpload = (e, addFile) => {
     const selectedFile = e.target.files[0];
@@ -50,6 +30,27 @@ const Sidebar = ({ match }) => {
         parent: parent,
       },
     });
+  };
+
+  /**
+   * on add file succes,
+   * add the file in cache
+   *
+   * @param {*} cache graphQL cache
+   * @param {*} object response object
+   */
+  const onAddFileSuccess = (cache, { data: { addFile } }) => {
+    const { items } = cache.readQuery({
+      query: GET_ITEMS(parent),
+    });
+
+    cache.writeQuery({
+      query: GET_ITEMS(parent),
+      data: { items: items.concat([addFile]) },
+    });
+
+    setIsUploading(false);
+    message.success('File added successfully');
   };
 
   const menu = (
@@ -72,19 +73,7 @@ const Sidebar = ({ match }) => {
   return (
     <Mutation
       mutation={ADD_FILE}
-      update={(cache, { data: { addFile } }) => {
-        const { items } = cache.readQuery({
-          query: GET_ITEMS(parent),
-        });
-
-        cache.writeQuery({
-          query: GET_ITEMS(parent),
-          data: { items: items.concat([addFile]) },
-        });
-
-        setIsUploading(false);
-        message.success('File added successfully');
-      }}
+      update={onAddFileSuccess}
       onError={error => {
         console.log(error);
       }}
@@ -94,7 +83,12 @@ const Sidebar = ({ match }) => {
           <div className="c-sidebar__container p-4">
             <Logo />
             <Dropdown overlay={menu} trigger={['click']}>
-              <Button type="primary" size="large" className="o-button--success w-100 mt-4" icon="plus">
+              <Button
+                type="primary"
+                size="large"
+                className="o-button--success w-100 mt-4"
+                icon={isUploading ? 'loading' : 'plus'}
+              >
                 New
               </Button>
             </Dropdown>

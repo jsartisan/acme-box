@@ -6,6 +6,12 @@ import resolvers from 'graphql/resolvers';
 
 let apolloClient = null;
 
+/**
+ * creates graphql apollo client
+ *
+ * @param {*} initialState
+ * @param {*} param1
+ */
 function create(initialState, { getToken, fetchOptions }) {
   const httpLink = createHttpLink({
     uri: process.env.REACT_APP_GRAPHQL_URL,
@@ -33,6 +39,13 @@ function create(initialState, { getToken, fetchOptions }) {
   });
 }
 
+/**
+ * returns the graphql apollo client
+ * if it does not exit, create and return it
+ *
+ * @param {*} initialState
+ * @param {*} options
+ */
 export default function initApollo(initialState, options) {
   if (!apolloClient) {
     apolloClient = create(initialState, options);

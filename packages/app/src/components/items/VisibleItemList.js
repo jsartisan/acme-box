@@ -1,33 +1,41 @@
 import React from 'react';
-import gql from 'graphql-tag';
+import { Skeleton, Empty } from 'antd';
 import { Query } from 'react-apollo';
 
+import { GET_ITEMS } from 'graphql/queries';
+import Animate from 'components/ui/Animate';
 import ItemList from 'components/items/ItemList';
 
 export default function VisibleItemList({ parent }) {
   return (
-    <Query
-      query={gql`
-        {
-          items(parent: "${parent}") {
-            id
-            name
-            isFile
-            createdAt
-            parent
-          }
-        }
-      `}
-    >
+    <Query query={GET_ITEMS(parent)}>
       {({ loading, error, data }) => {
-        if (loading) return 'Loading...';
-        if (error) return `Error! ${error.message}`;
+        if (loading)
+          return (
+            <div className="mt-5">
+              <Animate>
+                <Skeleton active avatar paragraph={{ rows: 1 }} />
+                <Skeleton active avatar paragraph={{ rows: 1 }} />
+                <Skeleton active avatar paragraph={{ rows: 1 }} />
+                <Skeleton active avatar paragraph={{ rows: 1 }} />
+                <Skeleton active avatar paragraph={{ rows: 1 }} />
+              </Animate>
+            </div>
+          );
+
+        if (loading === false && error) {
+          return (
+            <div className="pt-5 mt-5">
+              <Empty description={error.message} />
+            </div>
+          );
+        }
 
         return (
-          <div className="mt-4">
+          <Animate className="mt-4">
             <h6>My Box</h6>
             <ItemList items={data.items} />
-          </div>
+          </Animate>
         );
       }}
     </Query>

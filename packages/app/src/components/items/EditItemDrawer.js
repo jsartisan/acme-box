@@ -1,34 +1,11 @@
-import gql from 'graphql-tag';
 import { Formik } from 'formik';
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import { Mutation, withApollo } from 'react-apollo';
+import { Mutation } from 'react-apollo';
 import { Drawer, Button, Col, Row, Input, message } from 'antd';
 
+import { GET_ITEMS, EDIT_ITEM } from 'graphql/queries';
 import { createFolderValidator } from 'validators/itemValidators';
-
-const GET_ITEMS = parent => gql`
-  {
-    items(parent: "${parent}") {
-    id
-    name
-    isFile
-    parent
-    createdAt
-  }
-}`;
-
-const EDIT_ITEM = gql`
-  mutation editItem($name: String!, $id: String!) {
-    editItem(name: $name, id: $id) {
-      id
-      name
-      isFile
-      parent
-      createdAt
-    }
-  }
-`;
 
 class EditItemDrawer extends Component {
   constructor(props) {
@@ -38,9 +15,7 @@ class EditItemDrawer extends Component {
   }
 
   /**
-   * on submit form
-   *
-   * @return {[type]} [description]
+   * on submit form, hit edit item api
    */
   onSubmit = (values, editItem) => {
     editItem({ variables: values });
@@ -58,41 +33,48 @@ class EditItemDrawer extends Component {
     onClose();
   };
 
-  render() {
-    const { onClose, visible, match, item } = this.props;
+  /**
+   * on update item, update item in cache
+   */
+  onUpdate = (cache, { data: { editItem } }) => {
+    const { onClose, match, item } = this.props;
     const parent = match.params.folder ? match.params.folder : '';
+
+    const { items } = cache.readQuery({
+      query: GET_ITEMS(parent),
+    });
+
+    const index = items.findIndex(item => item._id === editItem._id);
+    const copy = items.slice();
+
+    if (index > -1) {
+      copy[index] = editItem;
+    }
+
+    cache.writeQuery({
+      query: GET_ITEMS(item.parent),
+      data: { items: copy },
+    });
+
+    this.formRef.setSubmitting(false);
+    message.success('Item updated successfully');
+    onClose();
+  };
+
+  render() {
+    const { onClose, visible, item } = this.props;
 
     return (
       <Mutation
         mutation={EDIT_ITEM}
-        update={(cache, { data: { editItem } }) => {
-          const { items } = cache.readQuery({
-            query: GET_ITEMS(parent),
-          });
-
-          const index = items.findIndex(item => item._id === editItem._id);
-          const copy = items.slice();
-
-          if (index > -1) {
-            copy[index] = editItem;
-          }
-
-          cache.writeQuery({
-            query: GET_ITEMS(item.parent),
-            data: { items: copy },
-          });
-
-          this.formRef.setSubmitting(false);
-          message.success('Item updated successfully');
-          onClose();
-        }}
+        update={this.onUpdate}
         onError={error => {
           console.log(error);
         }}
       >
         {(editItem, { data }) => (
           <Drawer
-            title="Edit"
+            title={`Edit ${item.isFile ? 'file' : 'folder'}`}
             width={720}
             onClose={this.onClose}
             visible={visible}
