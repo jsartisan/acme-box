@@ -1,0 +1,12 @@
+.items-list {
+  &__item {
+    cursor: pointer;
+    background: $white;
+    &:hover {
+      background: $primary-light;
+    }
+  }
+  &__itemDate {
+    font-size: 14px;
+  }
+}

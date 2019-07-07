@@ -1,0 +1,28 @@
+.c-input {
+  display: flex;
+  flex-direction: column;
+
+  label {
+    font-size: 14px;
+  }
+
+  &__help {
+    font-size: 12px;
+    margin-top: 4px;
+    color: $medium-light-gray;
+  }
+
+  &__error {
+    color: $red;
+    margin-top: 3px;
+    font-size: 13px;
+  }
+
+  input {
+    margin-top: 6px;
+  }
+}
+
+.ant-form-item {
+  margin-bottom: 12px;
+}

@@ -1,0 +1,167 @@
+.fade-enter {
+  opacity: 0.01;
+}
+
+.fade-appear {
+  opacity: 0.01;
+}
+
+.fade-appear.fade-appear-active {
+  opacity: 1;
+  transition: opacity .25s ease-in-out;
+}
+
+.fade-enter.fade-enter-active {
+  opacity: 1;
+  transition: opacity .25s ease-in-out;
+}
+
+.fade-leave {
+  opacity: 1;
+}
+
+.fade-leave.fade-leave-active {
+  opacity: 0.01;
+  transition: opacity .1s ease-in-out;
+}
+
+
+// translate from right to left
+.translateRight-enter {
+  opacity: 0.01;
+  transform: translateX(3px);
+}
+
+.translateRight-appear {
+  opacity: 0.01;
+  transform: translateX(3px);
+}
+
+.translateRight-appear.translateRight-appear-active {
+  opacity: 1;
+  transition: all .25s ease-in-out;
+  transform: translateX(0px);
+}
+
+.translateRight-enter.translateRight-enter-active {
+  opacity: 1;
+  transition: all .25s ease-in-out;
+  transform: translateX(0px);
+}
+
+.translateRight-leave {
+  opacity: 1;
+  transform: translateX(0px);
+}
+
+.translateRight-leave.translateRight-leave-active {
+  opacity: 0.01;
+  transition: all .1s ease-in-out;
+  transform: translateX(3px);
+}
+
+
+// translate from left to right
+.translateLeft-enter {
+  opacity: 0.01;
+  transform: translateX(-3px);
+}
+
+.translateLeft-appear {
+  opacity: 0.01;
+  transform: translateX(-3px);
+}
+
+.translateLeft-appear.translateLeft-appear-active {
+  opacity: 1;
+  transition: all .25s ease-in-out;
+  transform: translateX(0px);
+}
+
+.translateLeft-enter.translateLeft-enter-active {
+  opacity: 1;
+  transition: all .25s ease-in-out;
+  transform: translateX(0px);
+}
+
+.translateLeft-leave {
+  opacity: 1;
+  transform: translateX(0px);
+}
+
+.translateLeft-leave.translateLeft-leave-active {
+  opacity: 0.01;
+  transition: all .1s ease-in-out;
+  transform: translateX(-3px);
+}
+
+
+// translate from top to bottom
+.translateTop-enter {
+  opacity: 0.01;
+  transform: translateY(3px);
+}
+
+.translateTop-appear {
+  opacity: 0.01;
+  transform: translateY(3px);
+}
+
+.translateTop-appear.translateTop-appear-active {
+  opacity: 1;
+  transition: all .25s ease-in-out;
+  transform: translateY(0px);
+}
+
+.translateTop-enter.translateTop-enter-active {
+  opacity: 1;
+  transition: all .25s ease-in-out;
+  transform: translateY(0px);
+}
+
+.translateTop-leave {
+  opacity: 1;
+  transform: translateY(0px);
+}
+
+.translateTop-leave.translateTop-leave-active {
+  opacity: 0.01;
+  transition: all .1s ease-in-out;
+  transform: translateY(3px);
+}
+
+// translate from bottom to to
+.translateBottom-enter {
+  opacity: 0.01;
+  transform: translateY(-3px);
+}
+
+.translateBottom-appear {
+  opacity: 0.01;
+  transform: translateY(-3px);
+}
+
+.translateBottom-appear.translateBottom-appear-active {
+  opacity: 1;
+  transition: all .25s ease-in-out;
+  transform: translateY(0px);
+}
+
+.translateBottom-enter.translateBottom-enter-active {
+  opacity: 1;
+  transition: all .25s ease-in-out;
+  transform: translateY(0px);
+}
+
+.translateBottom-leave {
+  opacity: 1;
+  transform: translateY(0px);
+}
+
+.translateBottom-leave.translateBottom-leave-active {
+  opacity: 0.01;
+  transition: all .1s ease-in-out;
+  transform: translateY(-3px);
+}
+
+

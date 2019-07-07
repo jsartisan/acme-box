@@ -1,0 +1,20 @@
+.o-button {
+  &--success {
+    background: $green;
+    border-color: $green-dark;
+
+    &:hover,
+    &:focus,
+    &:active {
+      background: $green-light;
+      border-color: $green-dark;
+    }
+  }
+}
+
+.o-button--block-md {
+  @include mobile {
+    width: 100%;
+    display: block;
+  }
+}
