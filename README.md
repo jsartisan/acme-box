@@ -20,7 +20,7 @@ DB_DATABASE=acme
 
 Make sure you have mongo installed on your system and port is same as above value.
 
-2. Create .env.development.local and add following values:
+2. Create .env.development.local in packages/app and add following values:
 
 ```
 NODE_PATH=src/
