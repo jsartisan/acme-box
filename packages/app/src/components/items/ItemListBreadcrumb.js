@@ -1,6 +1,6 @@
 import React from 'react';
 import { Query } from 'react-apollo';
-import { Breadcrumb, Icon } from 'antd';
+import { Breadcrumb, Icon, Skeleton } from 'antd';
 import { Link } from 'react-router-dom';
 
 import { GET_ITEM } from 'graphql/queries';
@@ -20,7 +20,7 @@ export default function ItemListBreadcrumb({ parent, current }) {
   return (
     <Query query={GET_ITEM(parent)}>
       {({ loading, error, data }) => {
-        if (loading) return false;
+        if (loading) return <Skeleton active paragraph={{ rows: 0 }} />;
 
         if (data) {
           return (

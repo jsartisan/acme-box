@@ -4,7 +4,7 @@ import { Query } from 'react-apollo';
 
 import Animate from 'components/ui/Animate';
 import ItemList from 'components/items/ItemList';
-import { GET_ITEMS, GET_ITEM } from 'graphql/queries';
+import { GET_ITEMS } from 'graphql/queries';
 import ItemListBreadcrumb from 'components/items/ItemListBreadcrumb';
 
 export default function VisibleItemList({ parent }) {

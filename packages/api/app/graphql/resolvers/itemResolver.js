@@ -77,7 +77,7 @@ module.exports = {
     },
 
     /**
-     * delete item by id
+     * delete item by id and its inner items
      */
     deleteItem: async (parent, args, { db }) => {
       await db.Item.deleteMany({ ancestors: `${args.id}` });
