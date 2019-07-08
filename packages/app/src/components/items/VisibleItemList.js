@@ -2,9 +2,10 @@ import React from 'react';
 import { Skeleton, Empty } from 'antd';
 import { Query } from 'react-apollo';
 
-import { GET_ITEMS } from 'graphql/queries';
 import Animate from 'components/ui/Animate';
 import ItemList from 'components/items/ItemList';
+import { GET_ITEMS, GET_ITEM } from 'graphql/queries';
+import ItemListBreadcrumb from 'components/items/ItemListBreadcrumb';
 
 export default function VisibleItemList({ parent }) {
   return (
@@ -26,14 +27,14 @@ export default function VisibleItemList({ parent }) {
         if (loading === false && error) {
           return (
             <div className="pt-5 mt-5">
-              <Empty description={error.message} />
+              <Empty description="Oops! Something went wrong." />
             </div>
           );
         }
 
         return (
           <Animate className="mt-4">
-            <h6>My Box</h6>
+            <ItemListBreadcrumb parent={parent} />
             <ItemList items={data.items} />
           </Animate>
         );

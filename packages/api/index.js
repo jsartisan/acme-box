@@ -6,9 +6,7 @@ const moduleAlias = require("module-alias");
 moduleAlias.addAliases({
   "@root": `.`,
   "@app": `${__dirname}/app`,
-  "@views": `${__dirname}/views`,
-  "@config": `${__dirname}/config`,
-  "@database": `${__dirname}/database`
+  "@config": `${__dirname}/config`
 });
 
 const app = require("@app/bootstrap/app");

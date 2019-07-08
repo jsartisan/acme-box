@@ -1,5 +1,21 @@
 import gql from 'graphql-tag';
 
+export const GET_ITEM = id => gql`
+{
+  item(id: "${id}") {
+    id
+    name
+    isFile
+    createdAt
+    parent
+    ancestors {
+      id
+      name
+    }
+  }
+}
+`;
+
 export const GET_ITEMS = parent => gql`
 {
   items(parent: "${parent}") {
@@ -8,6 +24,10 @@ export const GET_ITEMS = parent => gql`
     isFile
     createdAt
     parent
+    ancestors {
+      id
+      name
+    }
   }
 }
 `;
@@ -26,30 +46,26 @@ export const EDIT_ITEM = gql`
       isFile
       parent
       createdAt
+      ancestors {
+        id
+        name
+      }
     }
   }
 `;
 
-export const ADD_FOLDER = gql`
-  mutation addFolder($name: String!, $parent: String!) {
-    addFolder(name: $name, parent: $parent) {
+export const ADD_ITEM = gql`
+  mutation addItem($name: String!, $parent: String!, $isFile: Boolean!) {
+    addItem(name: $name, parent: $parent, isFile: $isFile) {
       id
       name
       isFile
       parent
       createdAt
-    }
-  }
-`;
-
-export const ADD_FILE = gql`
-  mutation addFile($name: String!, $parent: String!) {
-    addFile(name: $name, parent: $parent) {
-      id
-      name
-      isFile
-      parent
-      createdAt
+      ancestors {
+        id
+        name
+      }
     }
   }
 `;

@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 import { Mutation, withApollo } from 'react-apollo';
 import { Drawer, Button, Col, Row, Input, message } from 'antd';
 
-import { GET_ITEMS, ADD_FOLDER } from 'graphql/queries';
+import { GET_ITEMS, ADD_ITEM } from 'graphql/queries';
 import { createFolderValidator } from 'validators/itemValidators';
 
 class NewFolderDrawer extends Component {
@@ -19,8 +19,8 @@ class NewFolderDrawer extends Component {
    *
    * @return {[type]} [description]
    */
-  onSubmit = (values, addFolder) => {
-    addFolder({ variables: values });
+  onSubmit = (values, addItem) => {
+    addItem({ variables: values });
   };
 
   /**
@@ -41,15 +41,15 @@ class NewFolderDrawer extends Component {
 
     return (
       <Mutation
-        mutation={ADD_FOLDER}
-        update={(cache, { data: { addFolder } }) => {
+        mutation={ADD_ITEM}
+        update={(cache, { data: { addItem } }) => {
           const { items } = cache.readQuery({
             query: GET_ITEMS(parent),
           });
 
           cache.writeQuery({
             query: GET_ITEMS(parent),
-            data: { items: items.concat([addFolder]) },
+            data: { items: items.concat([addItem]) },
           });
 
           this.formRef.setSubmitting(false);
@@ -60,7 +60,7 @@ class NewFolderDrawer extends Component {
           message.error('Oops! Something went wrong.');
         }}
       >
-        {(addFolder, { data }) => (
+        {(addItem, { data }) => (
           <Drawer
             title="Add new folder"
             width={720}
@@ -83,8 +83,9 @@ class NewFolderDrawer extends Component {
                   {
                     name: values.name,
                     parent: parent,
+                    isFile: false,
                   },
-                  addFolder
+                  addItem
                 )
               }
               validationSchema={createFolderValidator}

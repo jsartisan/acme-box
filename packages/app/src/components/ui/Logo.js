@@ -1,9 +1,11 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 export default function Logo() {
   return (
-    <div className="c-logo">
+    <Link to="/" className="c-logo">
+      <img src="/images/logo.svg" alt="AcmeBox" />
       <h2>AcmeBox</h2>
-    </div>
+    </Link>
   );
 }

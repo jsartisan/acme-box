@@ -8,6 +8,7 @@ let apolloClient = null;
 
 /**
  * creates graphql apollo client
+ * take cares of attach token and sending it in header
  *
  * @param {*} initialState
  * @param {*} param1

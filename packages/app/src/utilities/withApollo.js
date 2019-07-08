@@ -1,6 +1,4 @@
 import React from 'react';
-import cookie from 'cookie';
-import ls from 'local-storage';
 
 import initApollo from './initApollo';
 

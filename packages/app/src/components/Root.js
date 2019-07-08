@@ -3,7 +3,6 @@ import withApollo from 'utilities/withApollo';
 import { ApolloProvider } from 'react-apollo';
 
 import 'antd/dist/antd.css';
-
 import 'assets/sass/custom.bootstrap.scss';
 import 'assets/sass/app.scss';
 

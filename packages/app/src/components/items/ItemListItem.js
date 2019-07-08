@@ -7,6 +7,9 @@ import DeleteItemBtn from 'components/items/DeleteItemBtn';
 import EditItemDrawer from 'components/items/EditItemDrawer';
 
 const ItemListItem = ({ item, history }) => {
+  /**
+   * hooks for edit item drawer
+   */
   const [isEditItemDrawerVisible, setEditItemDrawerVisible] = useState(false);
 
   /**
@@ -33,6 +36,9 @@ const ItemListItem = ({ item, history }) => {
     setEditItemDrawerVisible(true);
   };
 
+  /**
+   * edit menu for item
+   */
   const menu = (
     <Menu>
       <Menu.Item key="0" className="d-flex align-items-center" onClick={({ domEvent }) => onClickEditBtn(domEvent)}>

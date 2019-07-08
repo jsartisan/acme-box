@@ -19,7 +19,6 @@ const boot = app => {
   const server = new ApolloServer({
     typeDefs,
     resolvers,
-    schemaDirectives: {},
     context: async ({ req }) => {
       return { req, db };
     }
